@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Project 3</title>
+    <style>
+        * {
+            background-color: #EEEEEE;
+        }
+        
+        .font-Germania {
+            font-family: 'Germania One', cursive;
+        }
+        
+         ::placeholder {
+            font-style: italic;
+        }
+        
+        @media only screen and (min-width: 575px) {
+            form {
+                text-align: right
+            }
+             ::placeholder {
+                visibility: hidden;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Germania+One" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid text-center">
+        <h1 class="display-1 font-Germania">Class Marksheet</h1>
+        <form id="frmInput">
+            <div class="form-group row">
+                <label for="inputName" class="col-sm-5 col-form-label d-none d-sm-block d-md-block d-lg-block d-xl-block">Họ tên</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" n id="inputName" placeholder="Nhập họ tên">
+                </div>
+                <div class="col-sm-4 col-form-label-sm text-justify text-danger font-italic"></div>
+            </div>
+            <div class="form-group row">
+                <label for="inputMaths" class="col-sm-5 col-form-label d-none d-sm-block d-md-block d-lg-block d-xl-block">Điểm toán</label>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" id="inputMaths" placeholder="Nhập điểm toán">
+                </div>
+                <div class="col-sm-4 col-form-label-sm text-justify text-danger font-italic"></div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPhysics" class="col-sm-5 col-form-label d-none d-sm-block d-md-block d-lg-block d-xl-block">Điểm lý</label>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" id="inputPhysics" placeholder="Nhập điểm lý">
+                </div>
+                <div class="col-sm-4 col-form-label-sm text-justify text-danger font-italic"></div>
+            </div>
+            <div class="form-group row">
+                <label for="inputChemistry" class="col-sm-5 col-form-label d-none d-sm-block d-md-block d-lg-block d-xl-block">Điểm hóa</label>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" id="inputChemistry" placeholder="Nhập điểm hóa">
+                </div>
+                <div class="col-sm-4 col-form-label-sm text-justify text-danger font-italic"></div>
+            </div>
+            <div style="height: 10px"></div>
+            <div class="text-center">
+                <button type="button" id="btnSubmit" class="btn btn-info">Submit</button>
+            </div>
+        </form>
+        <div style="height: 30px"></div>
+        <div class="table-responsive">
+            <table class="table text-center" id="classMarkSheet">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Họ tên</th>
+                        <th>Toán</th>
+                        <th>Lý</th>
+                        <th>Hóa</th>
+                        <th>Trung bình</th>
+                        <th><input type="checkbox" id="checkAll" value=""></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 20px"></div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <button type="button" class="btn btn-info btn-xs col-sm-2" id="prtAvg">Tính điểm trung bình</button>
+            <div class="col-sm-2"><br></div>
+            <button type="button" class="btn btn-info btn-xs col-sm-2" id="prtMax">Xác định học sinh giỏi</button>
+            <div class="col-sm-3"></div>
+        </div>
+        <div style="height: 20px"></div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            /*
+            @tính điểm trung bình
+            @sử dụng val() để lấy giá trị trong input
+            */
+            $('#btnSubmit').click(function() {
+
+                var x = isNotEmpty(0, $('#inputName').val());
+                var y = isNumValid(1, $('#inputMaths').val());
+                var z = isNumValid(2, $('#inputPhysics').val());
+                var t = isNumValid(3, $('#inputChemistry').val());
+
+                if (x && y && z && t) {
+                    $('tbody').append("<tr> \n \
+                                        <td>" + $('#classMarkSheet tr').length + "</td> \n \
+                                        <td>" + $('#inputName').val() + "</td> \n \
+                                        <td>" + parseFloat($('#inputMaths').val()).toFixed(1) + "</td> \n \
+                                        <td>" + parseFloat($('#inputPhysics').val()).toFixed(1) + "</td> \n \
+                                        <td>" + parseFloat($('#inputChemistry').val()).toFixed(1) + "</td> \n \
+                                        <td>?</td> \n \
+                                        <td><input type='checkbox' value=''></td>\n \
+                                    </tr>");
+                    $('#frmInput').find('input').val(''); //empty the text box
+                }
+            });
+
+            /*
+            @check all checkbox
+            @Với mỗi lần click sẽ thực hiện
+            @Nếu checkbox này check thì toàn bộ các checkbox bên dưới sẽ check
+            @Nếu checkbox này uncheck thì toàn bộ checkbox bên dưới sẽ uncheck
+            */
+            $('#checkAll').click(function() {
+                if (isChecked(this)) {
+                    boxesChecking(true);
+                } else {
+                    boxesChecking(false);
+                }
+            });
+
+            /*
+            @Tính điểm trung bình
+            @duyệt qua bảng
+            @dòng nào được checked thì mới thực hiện tính trung bình
+            @lấy giá trị tại cột thứ 3, 4, 5 (với index lần lượt là 2, 3, 4) cộng lại với nhau rồi chia 3
+            @Dùng hàm hàm text() set kết quả chia vào cột thứ 6 (index là 5)
+            */
+            $('#prtAvg').click(function() {
+                $('tbody>tr').each(function() {
+                    if (isChecked($(this).find('input'))) {
+                        var x = toFloat(this, 2) + toFloat(this, 3) + toFloat(this, 4);
+                        $(this).children(':eq(5)').text((x / 3).toFixed(1));
+                    }
+                });
+            });
+
+            /*
+            @Xác định học sinh giỏi
+            @duyệt qua bảng
+            @nếu tại ô thứ 5 của dòng đó có giá trị lớn hơn 8 thì highlight nó lên
+            */
+            $('#prtMax').click(function() {
+                $('tbody>tr').each(function(index) {
+                    if (toFloat(this, 5) >= 8) {
+                        $(this).find('td').css('background-color', '#ffcccc');
+                    }
+                });
+            });
+
+            /*
+            @Xác định giá trị nhập vào có không rỗng hay ko
+            @Nếu không rỗng thì trả về true
+            @Nếu rỗng thì trả về false
+            @Clear thông báo lỗi nếu các điều kiện đều thỏa
+            */
+            function isNotEmpty(e, val) {
+                if (val.trim() == '') {
+                    $('#frmInput').children(':eq(' + e + ')').find(':eq(3)').text('Không được để trống');
+                    return false;
+                } else {
+                    $('#frmInput').children(':eq(' + e + ')').find(':eq(3)').text('');
+                    return true;
+                }
+            }
+
+            /*
+            @Xác định số nhập vào có đúng hay ko
+            @e: vị trị div thông báo của dòng điểm Toán/lý/hóa
+            @val: giá trị điểm Toán/Lý/Hóa
+            @nếu điểm < 0 hoặc > 0 --> báo lỗi, trả về false
+            @nếu giá trị trống --> trả về false
+            @nếu valid thì trả về true
+            */
+            function isNumValid(e, val) {
+                if (parseFloat(val) < 0 || parseFloat(val) > 10) {
+                    $('#frmInput').children(':eq(' + e + ')').find(':eq(3)').text('Bạn phải nhập số từ 0 đến 10');
+                    return false;
+                } else if (!isNotEmpty(e, val)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            /*
+            @Hàm xác định check box có được check hay ko
+            @Input 1 checkbox
+            @Trả về True or False
+            */
+            function isChecked(e) {
+                return $(e).prop("checked") == true;
+            };
+
+            /*
+            @Hàm xử lý check/uncheck toàn bộ box trong bảng
+            @Input True: check hết
+            @Input False: uncheck hết
+            */
+            function boxesChecking(bool) {
+                $('tbody>tr').each(function() {
+                    $(this).find('input').prop("checked", bool);
+                })
+            };
+
+            /*
+            @parse ký tự ra Int
+            @pNum: Parrent Number: dòng thứ mấy
+            @cNum: Children Number: cột thứ mấy
+            */
+            function toFloat(pNum, cNum) {
+                return parseFloat($(pNum).children(':eq(' + cNum + ')').text());
+            };
+        });
+    </script>
+</body>
+
+</html>
