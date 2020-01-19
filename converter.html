@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <!-- meta data -->
+    <meta charset="utf-8" />
+    <meta http-equiv="content-language" content="vi" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />    
+    <meta name="application-name" content="manhconverter">
+    <meta name="description" content="Converter from Alphabet to Katakana half-byte in NN LIFE/J system" />
+    <meta name="keywords" content="manh, converter , dxc" />
+    <meta name="author" content="manhtran150394@gmail.com" />
+    <meta name="google-site-verification" content="ZJjDkDjTMgdmWpK4yhp__25XCDY5YOoVS2W5NPa5Ds8" />
+    <meta name="robots" content="index, nofollow" />
+    <title>Converter</title>
+    <style>
+        * {
+            background-color: #EEEEEE;
+        }
+        
+        .font-Germania {
+            font-family: 'Germania One', cursive;
+        }
+        
+         ::placeholder {
+            font-style: italic;
+        }
+        
+        @media only screen and (min-width: 575px) {
+            form {
+                text-align: right
+            }
+             ::placeholder {
+                visibility: hidden;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Germania+One" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-NM664JT');</script>
+        <!-- End Google Tag Manager -->
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137991151-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-137991151-1');
+    </script>
+    <script data-ad-client="ca-pub-4453113919815991" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid text-center">
+        <h1 class="display-1 font-Germania">CONVERTER</h1>
+        <form id="frmInput">
+            <div class="form-group row">                
+                <div class="col-sm-6 text-center">
+                    <label>Alphabet charater</label>
+                    <input type="text" class="form-control"  id="inAlpha" placeholder="">
+                </div>
+                <div class="col-sm-6 text-center">
+                    <label>Katakana character</label>
+
+                    <input type="text" class="form-control"  id="outKata" placeholder="">
+                </div>
+            </div>            
+            <div style="height: 10px"></div>
+            <div class="text-center">
+                <button type="button" id="btnSubmit" class="btn btn-info">CONVERT</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('#btnSubmit').click(function(){
+                var alphaArr = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"," ",".","[","]"];
+                //var kataArr = ["ア","イ","ウ","エ","オ","カ","キ","ク","ケ","コ","タ","チ","ツ","テ","ト","ナ","ニ","ヌ","ネ","ノ","カ","ハ","ヒ","フ","ヘ","ホ","マ","ミ","ム","メ","モ","ヤ","ユ","ヨ","ラ","リ","ル","レ","ロ","ワ","ヲ","ン"];
+                //var kataArr =  ["ｱ","ｲ","ｳ","ｴ","ｵ","ｶ","ｷ","ｸ","ｹ","ｺ","ｻ","ｼ","ｽ","ｾ","ｿ","ﾀ","ﾁ","ﾂ","ﾃ","ﾄ","ﾅ","ﾆ","ﾇ","ﾈ","ﾉ","ﾊ","ﾋ","ﾌ","ﾍ","ﾎ","ﾏ","ﾐ","ﾑ","ﾒ","ﾓ","ﾔ","ﾕ","ﾖ","ﾗ","ﾘ","ﾙ","ﾚ","ﾛ","ﾜ","ｦ","ﾝ"];
+                var kataArr =  ["ｱ","ｲ","ｳ","ｴ","ｵ","ｶ","ｷ","ｸ","ｹ","ﾀ","ﾁ","ﾂ","ﾃ","ﾄ","ﾅ","ﾆ","ﾇ","ﾈ","ﾍ","ﾎ","ﾏ","ﾐ","ﾑ","ﾒ","ﾓ","ﾔ","ｿ","ｦ","ﾗ","ﾝ"];
+                var y = -1;
+                var x = $('#inAlpha').val().split("");
+                for (var n = 0; n < x.length; n++){
+                    y =  alphaArr.indexOf(x[n]);
+                    if(y > -1) {
+                        x[n] = kataArr[y];
+                    }
+                }
+                var z = x.join("");
+                $('#outKata').val(z);
+            });            
+        });
+    </script>
+</body>
+
+</html>
+
